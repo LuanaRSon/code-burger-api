@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const port = 3001;
+const PORT = process.env.PORT || 3001;
 const orders = [];
 
 const checkOrderId = (request, response, next) => {
@@ -14,7 +14,7 @@ const checkOrderId = (request, response, next) => {
 
   const index = orders.findIndex( order => order.id === id);
   if (index < 0) {
-    return response.status(404).json({ error: "user not found" })
+    return response.status(404).json({ error: "order not found" })
   }
 
   request.orderIndex = index;
@@ -66,6 +66,6 @@ app.patch("/order/:id", checkOrderId, (request, response) => {
   return response.json(orderReady);
 })
 
-app.listen(port, () => {
-  console.log(`🚀 Server started on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`🚀 Server started on port ${PORT}`);
 })
